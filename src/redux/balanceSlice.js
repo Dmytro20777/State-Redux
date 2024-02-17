@@ -1,39 +1,63 @@
-export const deposit = value => {
-    return {
-        type: 'balance/deposit',
-        payload: value
-    }
-};
+import { createSlice } from "@reduxjs/toolkit";
 
-export const minusDeposit = value => {
-    return {
-        type: 'balance/minusDeposit',
-        payload: value
-    }
-};
+const balanceSlice = createSlice({
+    name: 'balance',
+    initialState: {
+        value: 0,
+    },
+    reducers: {
+        deposit: (state, action) => {
+            state.value += action.payload
+        },
+        minusDeposit: (state, action) => {
+            state.value -= action.payload
+        },
+    },
+});
 
-const balanceItitialState = {
-    value: 0
-}
+export const { deposit, minusDeposit } = balanceSlice.actions;
+export const balanceReducer = balanceSlice.reducer;
 
-export const balanceReducer = (state = balanceItitialState, action) => {
+// export const deposit = createAction('balance/deposit');
 
-    switch (action.type) {
 
-        case 'balance/deposit':
-            return {
-                ...state,
-                value: state.value + action.payload
-            };
+// export const minusDeposit = createAction('balance/minusDeposit');
+
+// const balanceItitialState = {
+//     value: 0
+// }
+
+ 
+// export const balanceReducer = createReducer(balanceItitialState, (builder) => {
+//     builder
+//         .addCase(deposit, (state, action) => {
+//             state.value += action.payload
+//         })
+//         .addCase(minusDeposit, (state, action) => {
+//             state.value -= action.payload
+//         });
+// });
+
+
+
+// export const balanceReducer = (state = balanceItitialState, action) => {
+
+//     switch (action.type) {
+
+//         case 'balance/deposit':
+//             return {
+//                 ...state,
+//                 value: state.value + action.payload
+//             };
         
-        case 'balance/minusDeposit':
-            return {
-                ...state,
-                value: state.value - action.payload
-            }
+//         case 'balance/minusDeposit':
+//             return {
+//                 ...state,
+//                 value: state.value - action.payload
+//             }
 
 
-        default:
-            return state;
-    }
-}
+//         default:
+//             return state;
+//     }
+// }
