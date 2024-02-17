@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
 
 const balanceSlice = createSlice({
     name: 'balance',
@@ -7,16 +9,27 @@ const balanceSlice = createSlice({
     },
     reducers: {
         deposit: (state, action) => {
-            state.value += action.payload
+            state.value += action.payload;
         },
         minusDeposit: (state, action) => {
-            state.value -= action.payload
+            state.value -= action.payload;
         },
     },
 });
 
 export const { deposit, minusDeposit } = balanceSlice.actions;
-export const balanceReducer = balanceSlice.reducer;
+
+const persistBalanceConfig = {
+    key: "balance",
+    storage,
+    whitelist: ["value"]
+}
+
+export const balanceReducer = persistReducer(persistBalanceConfig, balanceSlice.reducer);
+
+
+
+// export const balanceReducer = balanceSlice.reducer;
 
 // export const deposit = createAction('balance/deposit');
 
